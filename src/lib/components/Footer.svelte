@@ -3,23 +3,23 @@
 
 	const sponsors = [
 		{
-			imgUrl: 'http://kickebocca.de/assets/verein/sponsoren/KommWohnen.jpg',
+			imgUrl: '/KommWohnen.jpg',
 			link: 'https://kommwohnen.de'
 		},
 		{
-			imgUrl: 'http://kickebocca.de/assets/verein/sponsoren/VGG.jpg',
+			imgUrl: '/VGG.jpg',
 			link: 'https://vgg-goerlitz.de'
 		},
 		{
-			imgUrl: 'http://kickebocca.de/assets/verein/sponsoren/Skan.jpg',
+			imgUrl: '/Skan.jpg',
 			link: 'https://skan.ch'
 		},
 		{
-			imgUrl: 'http://kickebocca.de/assets/verein/sponsoren/Landskron.jpg',
+			imgUrl: '/Landskron.jpg',
 			link: 'https://landskron.de'
 		},
 		{
-			imgUrl: 'http://kickebocca.de/assets/verein/sponsoren/Birkenstock.jpg',
+			imgUrl: '/Birkenstock.jpg',
 			link: 'https://birkenstock-group.com'
 		}
 	];
@@ -79,7 +79,6 @@
 		<div class="max-w-[800px]">
 			{#if browser}
 				<Carousel
-					let:loaded
 					bind:this={carousel}
 					particlesToShow={3}
 					autoplay
