@@ -87,10 +87,10 @@
 
 		<div class="w-max pb-3 flex space-x-12 h-full overflow-x-scroll">
 			{#if browser}
-				<Carousel particlesToShow={2}>
+				<Carousel particlesToShow={2} dots={false}>
 					{#each placeholderBlogPosts as blogPost}
 						<div class="">
-							<div class="w-[30vw] flex h-fit flex-col space-y-3">
+							<div class="w-[26vw] flex h-fit flex-col space-y-3">
 								<div class="w-full h-1/2 bg-green-300">
 									<img class="w-full h-full object-cover" src={blogPost.image} alt="" />
 								</div>

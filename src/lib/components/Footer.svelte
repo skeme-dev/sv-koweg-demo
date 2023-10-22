@@ -79,6 +79,7 @@
 		<div class="max-w-[800px]">
 			{#if browser}
 				<Carousel
+					let:loaded
 					bind:this={carousel}
 					particlesToShow={3}
 					autoplay
