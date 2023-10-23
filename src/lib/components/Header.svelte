@@ -33,7 +33,13 @@
 		},
 		{
 			label: 'Service',
-			route: '/service'
+			route: '/service',
+			subroutes: [
+				{
+					label: 'Downloads',
+					route: '/service/downloads'
+				}
+			]
 		},
 		{
 			label: 'Kontakt',
@@ -42,11 +48,9 @@
 	];
 
 	let isDropdownOpen = false;
-
-	console.log(routes[0].subroutes);
-
-	const handleHover = () => {
-		isDropdownOpen = !isDropdownOpen;
+	let activeDropdown = {
+		index: 5,
+		isActive: true
 	};
 </script>
 
@@ -56,14 +60,16 @@
 	</div>
 
 	<ul class="flex items-center space-x-6 ml-auto">
-		{#each routes as route}
+		{#each routes as route, index}
 			<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 
 			<li
 				class:relative={route.subroutes}
+				class:z-10={!route.subroutes}
 				on:mouseover={(e) => {
 					if (route.subroutes) {
-						isDropdownOpen = true;
+						activeDropdown.index = index;
+						activeDropdown.isActive = true;
 					}
 				}}
 				on:mouseleave={(e) => {
@@ -71,7 +77,8 @@
 						if (document.elementFromPoint(e.clientX, e.clientY)?.id == 'dropdown') {
 							return;
 						}
-						isDropdownOpen = false;
+						activeDropdown.index = 0;
+						activeDropdown.isActive = false;
 					}
 				}}
 			>
@@ -82,28 +89,31 @@
 					/>
 				</a>
 				{#if route.subroutes}
-					{#if isDropdownOpen}
+					{#if activeDropdown.index == index && activeDropdown.isActive}
 						<!-- svelte-ignore a11y-no-static-element-interactions -->
 						<div
 							on:mouseleave={(e) => {
 								if (route.subroutes) {
-									// if ()
-									isDropdownOpen = false;
+									activeDropdown.index = 0;
+									activeDropdown.isActive = false;
 								}
 							}}
 							id="dropdown"
-							class="pt-10 w-full absolute top-0 left-0"
+							class="pt-10 w-[10vw] absolute top-0 left-0"
 						>
-							<ul
+							<div
 								transition:slide
 								class="bg-white shadow-lg border-t-[3px] border-accent p-3 w-full"
 							>
 								{#each route.subroutes as subroute}
-									<li>
-										<a class="text-lg" href={subroute.route}>{subroute.label}</a>
-									</li>
+									<a
+										class="transition-[200ms] hover:text-accent block w-full h-full text-lg"
+										href={subroute.route}
+									>
+										<span>{subroute.label}</span>
+									</a>
 								{/each}
-							</ul>
+							</div>
 						</div>
 					{/if}
 				{/if}

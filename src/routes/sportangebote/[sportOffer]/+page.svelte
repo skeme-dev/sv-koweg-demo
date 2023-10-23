@@ -60,50 +60,56 @@
 	];
 </script>
 
-<div class="flex flex-col space-y-6">
-	<h1 class="text-4xl font-bold">{sportOffersObject.title}</h1>
-	<p class="text-lg">{sportOffersObject.description}</p>
-	<div class="flex bg-[#161a4e] text-white p-6 w-fit space-x-6 rounded">
-		<div class="flex justify-center items-center w-1/5">
-			<img
-				class="rounded"
-				src={sportOffersObject.departmentLead.profilePictureURL}
-				alt={'Profilbild von ' + sportOffersObject.departmentLead.name}
-			/>
-		</div>
-		<div class="flex flex-col">
-			<h3 class="text-xl font-semibold">{sportOffersObject.departmentLead.name}</h3>
-			<span>Abteilungsleiter</span>
-			<span>{sportOffersObject.departmentLead.phoneNumber}</span>
-			<span>{sportOffersObject.departmentLead.email}</span>
+<div class="flex flex-col space-y-16">
+	<div class="flex flex-col space-y-6">
+		<h1 class="text-4xl font-bold">{sportOffersObject.title}</h1>
+		<p class="text-lg">{sportOffersObject.description}</p>
+		<div class="flex bg-accent text-white p-6 w-fit space-x-6 rounded">
+			<div class="flex justify-center items-center w-1/5">
+				<img
+					class="rounded"
+					src={sportOffersObject.departmentLead.profilePictureURL}
+					alt={'Profilbild von ' + sportOffersObject.departmentLead.name}
+				/>
+			</div>
+			<div class="flex flex-col">
+				<h3 class="text-xl font-semibold">{sportOffersObject.departmentLead.name}</h3>
+				<span>Abteilungsleiter</span>
+				<span>{sportOffersObject.departmentLead.phoneNumber}</span>
+				<span>{sportOffersObject.departmentLead.email}</span>
+			</div>
 		</div>
 	</div>
-	<h2 class="text-2xl font-semibold">Unsere Mannschaften</h2>
-	<div class="flex space-x-12">
-		{#each sportOffersObject.teams as team}
-			<div class="bg-[#161a4e] text-white rounded">
-				<div class="max-w-1/2 h-fit">
-					<img class="rounded-t" src={team.teamImageUrl} alt="" />
+	<div class="flex flex-col space-y-6">
+		<h2 class="text-2xl font-semibold">Unsere Mannschaften</h2>
+		<div class="flex space-x-12">
+			{#each sportOffersObject.teams as team}
+				<div class="bg-[#161a4e] text-white rounded">
+					<div class="max-w-1/2 h-fit">
+						<img class="rounded-t" src={team.teamImageUrl} alt="" />
+					</div>
+					<div class="p-6 flex justify-center items-center">
+						<a href={team.url} class="text-center font-medium text-xl">
+							{team.name}
+						</a>
+					</div>
 				</div>
-				<div class="p-6 flex justify-center items-center">
-					<a href={team.url} class="text-center font-medium text-xl">
-						{team.name}
-					</a>
-				</div>
-			</div>
-		{/each}
+			{/each}
+		</div>
 	</div>
-	<h2 class="text-2xl font-semibold">Aktuelles</h2>
-	<div class="flex flex-col divide-y">
-		{#each blogPostsPreviews as preview}
-			<div class="flex flex-col my-1">
-				<div class="flex pt-1 space-x-3 items-center">
-					<span>{preview.category}</span>
-					<span>|</span>
-					<span>Hochgeladen am {preview.uploadedAt.toLocaleDateString()}</span>
+	<div class="flex flex-col space-y-6">
+		<h2 class="text-2xl font-semibold">Aktuelles</h2>
+		<div class="flex flex-col divide-y">
+			{#each blogPostsPreviews as preview}
+				<div class="flex flex-col my-1">
+					<div class="flex pt-1 space-x-3 items-center">
+						<span>{preview.category}</span>
+						<span>|</span>
+						<span>Hochgeladen am {preview.uploadedAt.toLocaleDateString()}</span>
+					</div>
+					<a href={preview.url} class="mt-1 text-xl">{preview.title}</a>
 				</div>
-				<a href={preview.url} class="mt-1 text-xl">{preview.title}</a>
-			</div>
-		{/each}
+			{/each}
+		</div>
 	</div>
 </div>
