@@ -49,8 +49,8 @@
 
 	let isDropdownOpen = false;
 	let activeDropdown = {
-		index: 5,
-		isActive: true
+		index: 0,
+		isActive: false
 	};
 </script>
 
