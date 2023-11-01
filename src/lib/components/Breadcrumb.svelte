@@ -34,7 +34,7 @@
 	}
 </script>
 
-<div class="text-lg mb-12">
+<div class="md:block hidden text-lg mb-12">
 	<span class="mr-6">Sie befinden Sich hier:</span>
 	{#each arr2 as elem, index}
 		<a href={getLinkForSubpage(index)}>

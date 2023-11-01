@@ -33,12 +33,12 @@
 
 <Header />
 <div class="w-full h-[40vh] bg-img" />
-<main class="px-64 py-12 flex flex-col">
+<main class="md:px-64 px-8 py-12 flex flex-col">
 	{#if isBreadcrumbActive}
 		<Breadcrumb />
 	{/if}
-	<div class="flex space-x-12">
-		<div class="flex flex-col w-1/4 space-y-24">
+	<div class="flex md:space-x-12">
+		<div class="md:flex hidden flex-col w-1/4 space-y-24">
 			{#if isSitemapActive}
 				<SiteMap
 					label={sitemapOptions.label}

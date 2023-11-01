@@ -26,7 +26,7 @@
 		Download aufgeführt. Sollten Sie eine Frage haben, können Sie sich auch gerne an unsere
 		Mitarbeiter in der Geschäftsstelle wenden.
 	</p>
-	<div class="flex flex-col space-y-6 w-1/2 !mt-12">
+	<div class="flex flex-col space-y-6 md:w-1/2 w-full !mt-12">
 		{#each downloadableFiles as file}
 			<div class="flex items-center bg-accent text-white p-6">
 				<div class="flex">

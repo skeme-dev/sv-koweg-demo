@@ -64,8 +64,8 @@
 	<div class="flex flex-col space-y-6">
 		<h1 class="text-4xl font-bold">{sportOffersObject.title}</h1>
 		<p class="text-lg">{sportOffersObject.description}</p>
-		<div class="flex bg-accent text-white p-6 w-fit space-x-6 rounded">
-			<div class="flex justify-center items-center w-1/5">
+		<div class="flex bg-accent text-white p-6 md:w-fit w-full space-x-6 rounded">
+			<div class="flex justify-center items-center md:w-1/5 w-20">
 				<img
 					class="rounded"
 					src={sportOffersObject.departmentLead.profilePictureURL}
@@ -82,7 +82,7 @@
 	</div>
 	<div class="flex flex-col space-y-6">
 		<h2 class="text-2xl font-semibold">Unsere Mannschaften</h2>
-		<div class="flex space-x-12">
+		<div class="flex md:flex-row flex-col md:space-x-12 md:space-y-0 space-y-12">
 			{#each sportOffersObject.teams as team}
 				<div class="bg-[#161a4e] text-white rounded">
 					<div class="max-w-1/2 h-fit">

@@ -1,9 +1,7 @@
-export function handleError({ error, event }) {
+import type { HandleServerError } from '@sveltejs/kit';
+
+export function handleError<HandleServerError>({ error, event }) {
 	return {
-		message:
-			error?.code === 404
-				? 'Die angeforderte Seite konnte nicht gefunden werden.'
-				: 'Ein interner Fehler ist aufgetreten',
-		code: error?.code ?? 'Unbekannt'
+		code: !event.route.id ? 404 : 500
 	};
 }

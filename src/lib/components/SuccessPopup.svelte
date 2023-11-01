@@ -11,7 +11,7 @@
 	bind:this={dialog}
 	on:close={() => (showModal = false)}
 	on:click|self={() => dialog.close()}
-	class="!mt-24 rounded w-[35%]"
+	class="!mt-24 rounded md:w-[35%] w-[80%]"
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class="p-6 space-y-6" on:click|stopPropagation>
