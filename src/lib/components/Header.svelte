@@ -1,18 +1,43 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { fly, slide } from 'svelte/transition';
+	import { fade, fly, slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { get } from 'svelte/store';
 	import { dimensions } from '$lib';
 	import { screenWidth } from '$lib/stores/screenDimensionStore';
 
 	const screenDimension = get(screenWidth);
-
 	const routes = [
 		{
 			label: 'Unser Verein',
-			route: '/'
+			route: '/',
+			subroutes: [
+				{
+					label: 'Vereinsstruktur',
+					route: '/struktur'
+				},
+				{
+					label: 'Geschäftsstelle',
+					route: '/verein/geschaeftsstelle'
+				},
+				{
+					label: 'Vorstand',
+					route: '/vorstand'
+				},
+				{
+					label: 'Sportstätten',
+					route: '/sportstaetten'
+				},
+				{
+					label: 'Vereinshistorie',
+					route: '/historie'
+				},
+				{
+					label: 'Satzung',
+					route: '/verein/satzung'
+				}
+			]
 		},
 		{
 			label: 'Sportangebot',
@@ -57,6 +82,7 @@
 		index: 0,
 		isActive: false
 	};
+	let navbarElementHeight;
 
 	function toggleHamburgerMenu() {
 		isHamburgerMenuOpen = !isHamburgerMenuOpen;
@@ -67,13 +93,33 @@
 			return options.fn(node, options);
 		}
 	}
+
+	let shrinked = false;
+
+	function shrinkNavbar() {
+		if (
+			document.body.scrollTop > navbarElementHeight ||
+			document.documentElement.scrollTop > navbarElementHeight
+		) {
+			shrinked = true;
+		} else {
+			shrinked = false;
+		}
+	}
 </script>
 
-<nav class="sticky top-0 left-0 z-20">
-	<header class=" md:w-full h-fit bg-white z-50 sticky flex md:px-64 px-8 py-6">
-		<div class="md:w-24 w-16 h-fit">
+<nav bind:clientHeight={navbarElementHeight} class="sticky top-0 left-0 z-20">
+	<header
+		class="transition-all duration-300 md:w-full h-fit bg-white z-50 sticky flex md:px-64 px-8 {shrinked
+			? 'py-2'
+			: 'py-6'}"
+	>
+		<a
+			href="/"
+			class="transition-all duration-300 {shrinked ? 'md:w-20 w-14' : 'md:w-24 w-16'} h-fit"
+		>
 			<img src="/sv-koweg-logo.png" alt="SV Koweg Logo" />
-		</div>
+		</a>
 
 		<ul class="md:flex hidden md:flex-row flex-col items-center space-x-6 ml-auto">
 			{#each routes as route, index}
@@ -121,12 +167,12 @@
 								class="pt-10 w-[10vw] absolute top-0 left-0"
 							>
 								<div
-									transition:slide
-									class="bg-white shadow-lg border-t-[3px] border-accent p-3 w-full"
+									transition:fade={{ duration: 100 }}
+									class="mr-12 divide-y bg-white shadow-lg border-t-[3px] border-accent py-3 pl-3 pr-5 w-full"
 								>
 									{#each route.subroutes as subroute}
 										<a
-											class="transition-[200ms] hover:text-accent block w-full h-full text-lg"
+											class="py-2 pl-2 font-medium transition-[200ms] hover:text-accent block w-full h-full text-base"
 											href={subroute.route}
 										>
 											<span>{subroute.label}</span>
@@ -199,3 +245,5 @@
 		</div>
 	{/if}
 </nav>
+
+<svelte:window on:scroll={shrinkNavbar} />

@@ -1,7 +1,6 @@
 <script>
-	export const prerender = true;
-
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 
 	const sportOffer = $page.params.sportOffer;
 
@@ -35,19 +34,28 @@
 			category: 'Volleyball',
 			uploadedAt: new Date('2023-09-07'),
 			title: 'Test Blog Post 1',
-			url: '/news/volleyball/test-blog-post-1'
+			image: 'https://picsum.photos/350/200?random=3',
+			url: '/news/volleyball/test-blog-post-1',
+			description:
+				'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus quibusdam officia error distinctio, sed quam dolores reprehenderit pariatur velit consectetur.'
 		},
 		{
 			category: 'Volleyball',
 			uploadedAt: new Date('2023-09-08'),
 			title: 'Test Blog Post 2',
-			url: '/news/volleyball/test-blog-post-2'
+			image: 'https://picsum.photos/350/200?random=4',
+			url: '/news/volleyball/test-blog-post-2',
+			description:
+				'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus quibusdam officia error distinctio, sed quam dolores reprehenderit pariatur velit consectetur.'
 		},
 		{
 			category: 'Volleyball',
 			uploadedAt: new Date('2023-09-09'),
 			title: 'Test Blog Post 3',
-			url: '/news/volleyball/test-blog-post-3'
+			image: 'https://picsum.photos/350/200?random=5',
+			url: '/news/volleyball/test-blog-post-3',
+			description:
+				'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus quibusdam officia error distinctio, sed quam dolores reprehenderit pariatur velit consectetur.'
 		}
 	];
 
@@ -58,58 +66,81 @@
 			url: '/events/volleyball/event-1'
 		}
 	];
+
+	const pageContentToSpeech = () => {
+		let utterance = new SpeechSynthesisUtterance();
+		utterance.text = 'Volleyball';
+		utterance.lang = 'de';
+		window.speechSynthesis.speak(utterance);
+	};
 </script>
 
-<div class="flex flex-col space-y-16">
-	<div class="flex flex-col space-y-6">
-		<h1 class="text-4xl font-bold">{sportOffersObject.title}</h1>
-		<p class="text-lg">{sportOffersObject.description}</p>
-		<div class="flex bg-accent text-white p-6 md:w-fit w-full space-x-6 rounded">
-			<div class="flex justify-center items-center md:w-1/5 w-20">
-				<img
-					class="rounded"
-					src={sportOffersObject.departmentLead.profilePictureURL}
-					alt={'Profilbild von ' + sportOffersObject.departmentLead.name}
-				/>
-			</div>
-			<div class="flex flex-col">
-				<h3 class="text-xl font-semibold">{sportOffersObject.departmentLead.name}</h3>
-				<span>Abteilungsleiter</span>
-				<span>{sportOffersObject.departmentLead.phoneNumber}</span>
-				<span>{sportOffersObject.departmentLead.email}</span>
-			</div>
-		</div>
-	</div>
-	<div class="flex flex-col space-y-6">
-		<h2 class="text-2xl font-semibold">Unsere Mannschaften</h2>
-		<div class="flex md:flex-row flex-col md:space-x-12 md:space-y-0 space-y-12">
-			{#each sportOffersObject.teams as team}
-				<div class="bg-[#161a4e] text-white rounded">
-					<div class="max-w-1/2 h-fit">
-						<img class="rounded-t" src={team.teamImageUrl} alt="" />
-					</div>
-					<div class="p-6 flex justify-center items-center">
-						<a href={team.url} class="text-center font-medium text-xl">
-							{team.name}
-						</a>
+<div class="flex flex-col space-y-3">
+	<button class="w-fit mb-3" on:click={pageContentToSpeech}>Seite vorlesen</button>
+	<div class="flex flex-col space-y-12">
+		<div class="flex flex-col space-y-6">
+			<h1 class="text-4xl font-bold">{sportOffersObject.title}</h1>
+			<p class="text-lg">{sportOffersObject.description}</p>
+			<div class="flex bg-accent text-white p-6 md:w-fit w-full md:flex-row space-x-6 rounded">
+				<div class="flex justify-center items-center md:w-1/5 w-20">
+					<img
+						class="rounded"
+						src={sportOffersObject.departmentLead.profilePictureURL}
+						alt={'Profilbild von ' + sportOffersObject.departmentLead.name}
+					/>
+				</div>
+				<div class="flex flex-col space-y-2">
+					<h3 class="text-xl font-semibold">{sportOffersObject.departmentLead.name}</h3>
+					<span>Abteilungsleiter</span>
+					<div class="flex flex-col">
+						<span>{sportOffersObject.departmentLead.phoneNumber}</span>
+						<span>{sportOffersObject.departmentLead.email}</span>
 					</div>
 				</div>
-			{/each}
+			</div>
 		</div>
-	</div>
-	<div class="flex flex-col space-y-6">
-		<h2 class="text-2xl font-semibold">Aktuelles</h2>
-		<div class="flex flex-col divide-y">
-			{#each blogPostsPreviews as preview}
-				<div class="flex flex-col my-1">
-					<div class="flex pt-1 space-x-3 items-center">
-						<span>{preview.category}</span>
-						<span>|</span>
-						<span>Hochgeladen am {preview.uploadedAt.toLocaleDateString()}</span>
+		<div class="flex flex-col space-y-6">
+			<h2 class="text-2xl font-semibold">Unsere Mannschaften</h2>
+			<div class="flex md:flex-row flex-col md:space-x-12 md:space-y-0 space-y-12">
+				{#each sportOffersObject.teams as team}
+					<div class="bg-[#161a4e] text-white rounded">
+						<div class="max-w-1/2 h-fit">
+							<img class="rounded-t" src={team.teamImageUrl} alt="" />
+						</div>
+						<div class="p-6 flex justify-center items-center">
+							<a href={team.url} class="text-center font-medium text-xl">
+								{team.name}
+							</a>
+						</div>
 					</div>
-					<a href={preview.url} class="mt-1 text-xl">{preview.title}</a>
-				</div>
-			{/each}
+				{/each}
+			</div>
+		</div>
+		<div class="flex flex-col space-y-6">
+			<h2 class="text-2xl font-semibold">Aktuelles</h2>
+			<div class="grid grids-cols-3-1-3 gap-6 divide-y">
+				{#each blogPostsPreviews as preview}
+					<div class="flex flex-col my-1 bg-[#eee]">
+						<div class="w-full">
+							<img src={preview.image} alt="" />
+						</div>
+						<div class="flex flex-col p-6">
+							<div class="flex pt-1 space-x-3 items-center">
+								<span>{preview.category}</span>
+								<span>|</span>
+								<span>Hochgeladen am {preview.uploadedAt.toLocaleDateString()}</span>
+							</div>
+							<a href={preview.url} class="mt-1 text-xl">{preview.title}</a>
+						</div>
+					</div>
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>
+
+<style>
+	.grids-cols-3-1-3 {
+		grid-template-columns: repeat(3, minmax(0, 33.333333%));
+	}
+</style>

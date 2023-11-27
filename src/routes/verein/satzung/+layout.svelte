@@ -5,6 +5,6 @@
 	export let data: LayoutData;
 </script>
 
-<BaseLayout>
+<BaseLayout isSitemapActive={true}>
 	<slot />
 </BaseLayout>

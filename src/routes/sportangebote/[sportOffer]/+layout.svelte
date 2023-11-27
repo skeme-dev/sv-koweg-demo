@@ -1,59 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import Footer from '$lib/components/Footer.svelte';
-	import Header from '$lib/components/Header.svelte';
-	import SiteMap from '$lib/components/SiteMap.svelte';
 	import BaseLayout from '$lib/layouts/BaseLayout.svelte';
-
-	const arr = $page.url?.pathname.split('/');
-
-	// Remove first "/" from array
-	arr.shift();
-
-	function getStringForBreadcrumb(arr: string[]) {
-		let outputArray: string[] = [];
-		arr.forEach((arrElement) => {
-			const capitalizedLetter = arrElement.charAt(0).toUpperCase();
-			if (arrElement.includes('ss')) {
-				arrElement.replace('ss', 'ß');
-			}
-			let arr2 = arrElement.split('');
-			arr2.shift();
-			arr2.unshift(capitalizedLetter);
-			outputArray.push(arr2.join(''));
-		});
-		return outputArray;
-	}
-
-	let arr2 = getStringForBreadcrumb(arr);
-
-	function getLinkForSubpage(index: number): string {
-		let outputString: string = '/';
-		for (let i = 0; i < index + 1; i++) {
-			const element = arr[i];
-			console.log(element);
-			outputString += element + '/';
-		}
-		return outputString;
-	}
-
-	const events = [
-		{
-			title: 'Event 1',
-			date: new Date('2023-10-2'),
-			url: '/events/volleyball/event-1'
-		},
-		{
-			title: 'Event 2',
-			date: new Date('2023-10-3'),
-			url: '/events/volleyball/event-2'
-		},
-		{
-			title: 'Event 3',
-			date: new Date('2023-10-4'),
-			url: '/events/volleyball/event-3'
-		}
-	];
 </script>
 
 <BaseLayout>
