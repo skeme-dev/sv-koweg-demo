@@ -1,12 +1,23 @@
 <script lang="ts">
+	import SuccessPopup from '$lib/components/SuccessPopup.svelte';
+	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+
+	export let form;
+	let showModal = false;
+
+	onMount(() => {
+		if (form?.success) {
+			showModal = true;
+		}
+	});
 </script>
 
 <div class="w-full flex flex-col space-y-6">
 	<h1 class="text-4xl font-semibold">Kontakt</h1>
-	<div class="w-full flex">
+	<div class="w-full flex md:flex-row flex-col">
 		<div class="flex flex-col space-y-3 w-full">
 			<h2 class="text-2xl font-semibold">SV Koweg Görlitz e.V.</h2>
 			<p class="text-lg">Max Mustermann</p>
@@ -15,8 +26,8 @@
 				<p>02827 Görlitz</p>
 			</div>
 		</div>
-		<div class="flex flex-col w-full">
-			<div class="bg-accent p-6 rounded flex flex-col space-y-6">
+		<div class="flex flex-col w-full md:mt-0 mt-6">
+			<div class="w-full bg-accent p-6 rounded flex flex-col space-y-6">
 				<h2 class="text-white text-xl font-medium">Anfahrt</h2>
 				<!-- svelte-ignore a11y-missing-attribute -->
 				<iframe
@@ -33,14 +44,14 @@
 	</div>
 	<div class="mt-12 pt-12 flex flex-col space-y-2">
 		<h1 class="uppercase text-2xl font-semibold mb-6">Unser Kontaktformular</h1>
-		<form class="space-y-6" action="">
+		<form class="space-y-6" method="POST" action="?/sendContactForm">
 			<div class="flex flex-col space-y-2">
 				<label class="text-lg font-semibold" for="company">Firma</label>
 				<input class="px-3 py-2 rounded border" type="text" name="company" />
 			</div>
-			<div class="flex w-full space-x-6">
+			<div class="flex md:flex-row flex-col w-full md:space-x-6 md:space-y-0 space-y-6">
 				<div class="w-full flex flex-col space-y-2">
-					<label class="text-lg font-semibold" for="salutation">Anrede</label>
+					<label class="text-lg font-semibold" for="salutation">Anrede*</label>
 					<select class="px-3 py-2 rounded border" required name="salutation">
 						<option value="female">Frau</option>
 						<option value="male">Herr</option>
@@ -48,24 +59,62 @@
 					</select>
 				</div>
 				<div class="w-full flex flex-col space-y-2">
-					<label class="text-lg font-semibold" for="name">Name</label>
-					<input class="px-3 py-2 rounded border" required type="text" name="name" />
+					<label class="text-lg font-semibold" for="name">Name*</label>
+					<input
+						class="px-3 py-2 rounded border"
+						class:bg-red-100={form?.data?.includes('name')}
+						class:border-red-500={form?.data?.includes('name')}
+						type="text"
+						name="name"
+					/>
+					{#if form?.data?.includes('name')}
+						<div class="font-semibold text-red-600">Füllen Sie dieses Feld aus</div>
+					{/if}
 				</div>
 			</div>
 			<div class="flex flex-col space-y-2">
-				<label class="text-lg font-semibold" for="email">E-Mail-Adresse</label>
-				<input class="px-3 py-2 rounded border" type="email" name="email" required />
+				<label class="text-lg font-semibold" for="email">E-Mail-Adresse*</label>
+				<input
+					class="px-3 py-2 rounded border"
+					class:bg-red-100={form?.data?.includes('email')}
+					class:border-red-500={form?.data?.includes('email')}
+					type="email"
+					name="email"
+				/>
+				{#if form?.data?.includes('email')}
+					<div class="font-semibold text-red-600">Füllen Sie dieses Feld aus</div>
+				{/if}
 			</div>
 			<div class="flex flex-col space-y-2">
-				<label class="text-lg font-semibold" for="message">Nachricht</label>
-				<textarea class="px-3 py-2 rounded border" name="message" placeholder="Ihre Nachricht..." />
+				<label class="text-lg font-semibold" for="message">Nachricht*</label>
+				<textarea
+					class="px-3 py-2 rounded border"
+					class:bg-red-100={form?.data?.includes('message')}
+					class:border-red-500={form?.data?.includes('message')}
+					name="message"
+					placeholder="Ihre Nachricht..."
+				/>
+				{#if form?.data?.includes('message')}
+					<div class="font-semibold text-red-600">Füllen Sie dieses Feld aus</div>
+				{/if}
 			</div>
+			<button
+				type="submit"
+				class="px-5 py-3 bg-accent text-white rounded font-medium md:w-1/4 w-full text-lg"
+				>Absenden</button
+			>
 		</form>
-
+		<SuccessPopup bind:showModal>
+			<h2 slot="header" class="text-3xl font-semibold">Kontaktformular abgesendet</h2>
+			<div class="text-lg">
+				Wenn diese Nachricht auftaucht, wurde ihr Kontaktformular erfolgreich abgesendet. Sie
+				erhalten schnellstmöglich eine Antwort.
+			</div>
+		</SuccessPopup>
 		<div class="pt-12 flex flex-col">
 			<h1 class="uppercase text-2xl font-semibold mb-6">Oder per</h1>
-			<div class="flex w-full">
-				<div class="flex w-full bg-accent rounded p-6 m-6 text-white space-x-6">
+			<div class="flex md:flex-row flex-col w-full md:space-y-0 space-y-6">
+				<div class="flex w-full bg-accent rounded p-6 md:m-6 text-white space-x-6">
 					<div class="px-3 flex justify-center items-center">
 						<svg
 							width="28"
@@ -99,7 +148,7 @@
 						>
 					</div>
 				</div>
-				<div class="flex w-full bg-accent rounded p-6 m-6 text-white space-x-6">
+				<div class="flex w-full bg-accent rounded p-6 md:m-6 text-white space-x-6">
 					<div class="px-3 flex justify-center items-center">
 						<svg
 							width="28"

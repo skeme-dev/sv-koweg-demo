@@ -35,8 +35,10 @@
 </script>
 
 <footer class="flex flex-col">
-	<div class="flex justify-center items-center bg-accent text-white py-6">
-		<div class="flex space-x-24">
+	<div
+		class="flex justify-center md:text-left text-center items-center bg-accent text-white py-6 md:px-0 px-16"
+	>
+		<div class="flex md:flex-row flex-col md:space-x-24 md:space-y-0 space-y-6">
 			<div class="flex flex-col">
 				<h1 class="text-2xl mb-1 font-semibold">Geschäftsstelle</h1>
 				<div class="flex flex-col">
@@ -55,16 +57,16 @@
 			<div class="flex flex-col">
 				<h1 class="text-2xl mb-1 font-semibold">Direktlinks</h1>
 				<div class="flex flex-col">
-					<ul class="list-disc">
-						<li class="ml-6"><a href="/sportangebot">Sportangebot</a></li>
-						<li class="ml-6"><a href="/sportsuche">Sportsuche</a></li>
+					<ul class="md:list-disc md:pl-6">
+						<li><a href="/sportangebot">Sportangebot</a></li>
+						<li><a href="/sportsuche">Sportsuche</a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="flex flex-col">
 				<h1 class="text-2xl mb-1 font-semibold">Unser Service</h1>
 				<div class="flex flex-col">
-					<ul class="list-disc pl-6">
+					<ul class="md:list-disc md:pl-6">
 						<li><a href="/service/downloads">Downloads</a></li>
 						<li><a href="/service/mitglied-werden">Mitglied werden</a></li>
 						<li><a href="/service/beitragsrechner">Beitragsrechner</a></li>
@@ -76,7 +78,7 @@
 	<div
 		class="flex justify-center items-center bg-[#161a4e] text-white py-6 border-t border-b border-white border-dashed"
 	>
-		<div class="max-w-[800px]">
+		<div class="md:max-w-[800px] max-w-full md:px-0 px-6">
 			{#if browser}
 				<Carousel
 					bind:this={carousel}

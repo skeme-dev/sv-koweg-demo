@@ -1,8 +1,14 @@
 <script>
 	import { browser } from '$app/environment';
+	import { dimensions } from '$lib';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
+	import { screenWidth } from '$lib/stores/screenDimensionStore';
+	import { onMount } from 'svelte';
 	import Carousel from 'svelte-carousel';
+	import { get } from 'svelte/store';
+
+	const width = get(screenWidth);
 
 	const placeholderBlogPosts = [
 		{
@@ -60,19 +66,23 @@
 		id="img-carousel"
 	>
 		<div class="w-full h-full absolute top-0 left-0 bg-[rgba(0,0,0,0.4)]" />
-		<div class="absolute top-1/2 left-36 -translate-y-1/2 space-y-3">
-			<h1 class="text-white font-bold text-5xl mb-12">SV-Koweg Görlitz e.V.</h1>
-			<h2 class="text-white text-2xl font-medium">
+		<div
+			class="absolute top-1/2 md:left-36 left-8 md:-translate-x-0 -translate-x-4 -translate-y-1/2 space-y-3"
+		>
+			<h1 class="text-white font-bold md:text-5xl text-4xl mb-12 md:text-left text-center">
+				SV-Koweg Görlitz e.V.
+			</h1>
+			<h2 class="text-white text-2xl font-medium md:text-left text-center">
 				Herzlich willkommen auf unserer Internetseite – dem virtuellen Zuhause unseres Vereins!
 			</h2>
 		</div>
 	</div>
 
-	<div class="my-36 flex flex-col px-64">
+	<div class="my-36 flex flex-col md:px-64 px-8 text-2xl">
 		<div class="flex flex-col space-y-3">
-			<h1 class="font-bold text-5xl mb-6">Wer wir sind</h1>
+			<h1 class="font-bold md:text-5xl mb-6">Wer wir sind</h1>
 			<!-- <h2 class="font-semibold text-3xl">Willkommen auf unseren Internetseiten</h2> -->
-			<p class="text-5xl leading-snug text-justify font-semibold">
+			<p class="md:text-5xl leading-snug text-justify font-semibold">
 				Unser Verein wurde 2006 gegründet und ist mit 999 Sporttreibenden einer der größten
 				Sportvereine der Region. Unser Sportangebot richtet sich an Sportbegeisterte aller
 				Altersklassen. Ob klein oder groß, mit Handicap oder ohne: Wir bringen Menschen in Bewegung!
@@ -80,47 +90,72 @@
 		</div>
 		<!-- News Area -->
 	</div>
-	<div class="flex space-x-24 px-64 py-12 bg-[#eee] mt-12">
+	<div
+		class="md:w-screen flex md:flex-row flex-col md:space-x-24 md:px-64 px-8 py-12 bg-[#eee] mt-12"
+	>
 		<div class="h-full">
-			<h1 class="font-bold text-4xl">Aktuelles</h1>
+			<h1 class="font-bold md:text-4xl text-3xl">Aktuelles</h1>
 		</div>
 
-		<div class="w-max pb-3 flex space-x-12 h-full overflow-x-scroll">
-			{#if browser}
-				<Carousel particlesToShow={2} dots={false}>
-					{#each placeholderBlogPosts as blogPost}
-						<div class="">
-							<div class="w-[26vw] flex h-fit flex-col space-y-3">
-								<div class="w-full h-1/2 bg-green-300">
-									<img class="w-full h-full object-cover" src={blogPost.image} alt="" />
+		<div class="w-full pb-3 flex md:space-x-12 h-full">
+			<div class="md:flex hidden">
+				{#if browser}
+					<Carousel particlesToShow={2} dots={false}>
+						{#each placeholderBlogPosts as blogPost}
+							<div class="">
+								<div class="w-[26vw] flex h-fit flex-col space-y-3">
+									<div class="w-full h-1/2 bg-green-300">
+										<img class="w-full h-full object-cover" src={blogPost.image} alt="" />
+									</div>
+									<div class="flex space-x-6">
+										<p>{blogPost.category}</p>
+										<p>|</p>
+										<p>{blogPost.uploadedAt}</p>
+									</div>
+									<h1 class="text-2xl font-semibold mb-3">{blogPost.title}</h1>
+									<p class="text-justify">{blogPost.previewText}</p>
+									<a
+										href={blogPost.link}
+										class="bg-[rgba(21,26,78)] w-fit px-6 text-white py-3 rounded !mt-6"
+										>Weiterlesen</a
+									>
 								</div>
-								<div class="flex space-x-6">
-									<p>{blogPost.category}</p>
-									<p>|</p>
-									<p>{blogPost.uploadedAt}</p>
-								</div>
-								<h1 class="text-2xl font-semibold mb-3">{blogPost.title}</h1>
-								<p class="text-justify">{blogPost.previewText}</p>
-								<a
-									href={blogPost.link}
-									class="bg-[rgba(21,26,78)] w-fit px-6 text-white py-3 rounded !mt-6"
-									>Weiterlesen</a
-								>
 							</div>
+						{/each}
+					</Carousel>
+				{/if}
+			</div>
+
+			<div class="md:hidden flex flex-col w-auto divide-solid space-y-8">
+				{#each placeholderBlogPosts as blogPost}
+					<div class="flex flex-col pt-8">
+						<div class="flex h-fit flex-col">
+							<div class="w-full h-fit bg-green-300">
+								<img class="w-full h-full object-cover" src={blogPost.image} alt="" />
+							</div>
+							<div class="flex space-x-3 mt-3">
+								<p>{blogPost.category}</p>
+								<p>|</p>
+								<p>{blogPost.uploadedAt}</p>
+							</div>
+							<h1 class="text-2xl font-semibold mb-3">{blogPost.title}</h1>
+							<p class="text-justify">{blogPost.previewText}</p>
+							<a
+								href={blogPost.link}
+								class="bg-[rgba(21,26,78)] md:w-fit w-full px-6 text-white py-3 rounded !mt-6 text-center"
+								>Weiterlesen</a
+							>
 						</div>
-					{/each}
-				</Carousel>
-			{/if}
+					</div>
+				{/each}
+			</div>
 		</div>
 	</div>
 </main>
+
 <Footer />
 
 <style global>
-	html,
-	body {
-		font-family: 'Titillium Web', sans-serif;
-	}
 	.bg-img-svkoweg__homepage_image_carousel_pic_1 {
 		background-image: url('https://picsum.photos/1800/1000?random=1');
 		background-size: cover;
