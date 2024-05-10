@@ -1,37 +1,35 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-	import { fade, fly, slide } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
-	import { get } from 'svelte/store';
-	import { dimensions } from '$lib';
-	import { screenWidth } from '$lib/stores/screenDimensionStore';
+	import { fade, slide } from 'svelte/transition';
 
-	const screenDimension = get(screenWidth);
 	const routes = [
 		{
 			label: 'Unser Verein',
 			route: '/',
 			subroutes: [
 				{
-					label: 'Vereinsstruktur',
-					route: '/struktur'
+					label: 'Aktuelles',
+					route: '/'
 				},
+
 				{
 					label: 'Geschäftsstelle',
 					route: '/verein/geschaeftsstelle'
 				},
 				{
 					label: 'Vorstand',
-					route: '/vorstand'
+					route: '/verein/vorstand'
+				},
+				{
+					label: 'Vereinsstruktur',
+					route: '/verein/struktur'
 				},
 				{
 					label: 'Sportstätten',
-					route: '/sportstaetten'
+					route: '/verein/sportstaetten'
 				},
 				{
 					label: 'Vereinshistorie',
-					route: '/historie'
+					route: '/verein/historie'
 				},
 				{
 					label: 'Satzung',
@@ -54,8 +52,8 @@
 			route: '/sponsoren'
 		},
 		{
-			label: 'Fanshop',
-			route: '/fanshop'
+			label: 'Shop',
+			route: '/shop'
 		},
 		{
 			label: 'Sportlerklause',
@@ -145,7 +143,7 @@
 					}}
 				>
 					<a
-						class="group transition duration-300 font-semibold text-lg uppercase"
+						class="group transition duration-300 font-semibold text-xl uppercase"
 						href={route.route}
 					>
 						{route.label}
@@ -172,7 +170,7 @@
 								>
 									{#each route.subroutes as subroute}
 										<a
-											class="py-2 pl-2 font-medium transition-[200ms] hover:text-accent block w-full h-full text-base"
+											class="py-2 pl-2 font-medium transition-[200ms] hover:text-accent block w-full h-full text-lg"
 											href={subroute.route}
 										>
 											<span>{subroute.label}</span>

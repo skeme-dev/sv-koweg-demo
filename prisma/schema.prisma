@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id                String      @id @default(cuid())
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  title             String      @db.VarChar(255)
+  content           String?
+  published         Boolean     @default(false)
+
+  author            User        @relation(fields: [authorId], references: [id])
+  authorId          String
+}
+
+model User {
+  id                String      @id @default(cuid())
+  createdAt         DateTime    @default(now())
+  email             String      @unique
+  password          String
+  name              String
+  sportlerklause    Boolean     @default(false)
+  verified          Boolean     @default(false)
+
+  posts             Post[]
+  team              Team?
+  department        Department?
+  role              Role        @default(USER)
+}
+
+model Team {
+  id                String      @id @default(cuid())
+  trainingSchedule  Json
+
+  location          Location[]
+
+  trainer           User        @relation(fields: [trainerId], references: [id])
+  trainerId         String      @unique
+
+  department        Department  @relation(fields: [departmentId], references: [id])
+  departmentId      String
+}
+
+model Department {
+  id                String      @id @default(cuid())
+
+  leader            User        @relation(fields: [leaderId], references: [id])
+  leaderId          String      @unique
+  
+  teams             Team[]
+}
+
+model Location {
+  id                String      @id @default(cuid())
+  name              String
+  street            String
+  postcode          Int
+  city              String
+
+  teams             Team[]
+}
+
+enum Role {
+    ADMIN
+    TRAINER
+    LEADER
+    USER
+}
