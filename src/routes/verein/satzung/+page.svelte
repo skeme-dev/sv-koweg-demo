@@ -196,7 +196,7 @@
 							</clipPath>
 						</defs>
 					</svg>
-					<span>Download</span>
+					<span>Herunterladen</span>
 				</a>
 			</div>
 		</div>
