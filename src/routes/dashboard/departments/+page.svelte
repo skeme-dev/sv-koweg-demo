@@ -2,8 +2,14 @@
 	import Button from '$lib/components/dashboard/ui/button/button.svelte';
 	import { Plus } from 'lucide-svelte';
 	import type { PageData } from './$types';
+	import Dialog from '$lib/components/dashboard/components/Dialog.svelte';
+	import Label from '$lib/components/dashboard/ui/label/label.svelte';
+	import Input from '$lib/components/dashboard/ui/input/input.svelte';
+	import * as Select from '$lib/components/dashboard/ui/select/index';
+	import { enhance } from '$app/forms';
 
 	export let data: PageData;
+	export let form;
 
 	const teams = [
 		{
@@ -25,6 +31,9 @@
 			url: '/dashboard/teams/maenner-1'
 		}
 	];
+
+	let previewTeamPicture: string;
+	let formElement;
 </script>
 
 <div class="w-full flex flex-col">
@@ -134,9 +143,81 @@
 				{/each}
 			</div>
 			<div class="w-1/12 flex flex-col space-y-3 justify-start items-end">
-				<Button variant="default" size="icon">
-					<Plus class="stroke-white h-5 w-5" />
-				</Button>
+				<Dialog dialogTitle="Mannschaft erstellen" triggerClassName="p-2.5">
+					<Plus slot="dialogTrigger" class="stroke-white h-5 w-5" />
+					<div slot="dialogContent">
+						<form
+							class="grid gap-4 py-4"
+							bind:this={formElement}
+							action="?/createTeam"
+							method="post"
+							use:enhance
+							enctype="multipart/form-data"
+						>
+							<div class="grid grid-cols-4 items-center gap-4">
+								<Label for="name" class="text-right">Name</Label>
+								<Input name="title" id="name" value="Pedro Duarte" class="col-span-3" />
+							</div>
+							<div class="grid grid-cols-4 items-center gap-4">
+								<Label for="description" class="text-right">Beschreibung</Label>
+								<Input
+									name="description"
+									id="description"
+									value="Pedro Duarte"
+									class="col-span-3"
+								/>
+							</div>
+							<div class="grid grid-cols-4 items-center gap-4">
+								<Label for="username" class="text-right">Trainer</Label>
+								<Select.Root portal={null}>
+									<Select.Trigger class="w-max">
+										<Select.Value placeholder="Wähle einen Benutzer aus" />
+									</Select.Trigger>
+									<Select.Content>
+										<Select.Group>
+											<Select.Label>Benutzer</Select.Label>
+											{#each data.users as user}
+												<Select.Item value={user.id} label={user.name}>{user.name}</Select.Item>
+											{/each}
+										</Select.Group>
+									</Select.Content>
+									<Select.Input name="userId" />
+								</Select.Root>
+							</div>
+							<div class="grid grid-cols-4 items-center gap-4">
+								<Label for="pic" class="text-right">Bild</Label>
+								<div class="col-span-3 flex flex-col justify-center items-center">
+									<Input
+										on:change={(e) => {
+											const file = e.target.files[0];
+											if (file) {
+												previewTeamPicture = URL.createObjectURL(file);
+											}
+										}}
+										accept="image/*"
+										id="pic"
+										type="file"
+										name="team_image"
+									/>
+									{#if previewTeamPicture}
+										<div class="max-w-[50%]">
+											<img src={previewTeamPicture} class="w-full rounded-md my-3 mx-auto" alt="" />
+										</div>
+									{/if}
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="" slot="dialogFooter">
+						<Button
+							on:click={() => {
+								formElement?.submit();
+							}}
+							type="submit">Erstellen</Button
+						>
+					</div>
+				</Dialog>
+
 				<Button variant="outline" size="icon">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"

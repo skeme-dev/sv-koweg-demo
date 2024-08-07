@@ -5,7 +5,4 @@
 	export let data: LayoutData;
 </script>
 
-<div class="flex flex-col">
-	<Head />
-	<slot />
-</div>
+<slot />

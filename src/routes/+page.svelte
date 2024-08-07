@@ -1,14 +1,8 @@
 <script>
 	import { browser } from '$app/environment';
-	import { dimensions } from '$lib';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
-	import { screenWidth } from '$lib/stores/screenDimensionStore';
-	import { onMount } from 'svelte';
 	import Carousel from 'svelte-carousel';
-	import { get } from 'svelte/store';
-
-	const width = get(screenWidth);
 
 	const placeholderBlogPosts = [
 		{

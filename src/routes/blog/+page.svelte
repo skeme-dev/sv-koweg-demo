@@ -1,23 +1,101 @@
-<script>
-    const data = {
-        title: "Test Blog",
-        imageUrl: "https://picsum.photos/1200/800?random=5",
-        author: "Lukas Schneider",
-        lead: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur mollitia fuga reiciendis cupiditate magni illo ad expedita? Quas, nostrum nemo adipisci sit earum, libero quod nisi velit necessitatibus ducimus accusantium ab molestiae explicabo saepe accusamus minima neque eius hic consequatur sunt ad quia blanditiis aliquid. Accusantium assumenda veritatis tempore aspernatur?",
-        body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime cum repellat sed. Dolore, excepturi nihil? Error mollitia libero facilis neque eius perferendis enim nihil commodi temporibus aliquid. Mollitia iusto hic adipisci aspernatur nesciunt deserunt accusamus? Quam nobis minus quae totam eligendi aliquid vitae ratione vel numquam? Tenetur reiciendis dignissimos, dolor quisquam adipisci quo aliquid est neque nostrum perspiciatis officiis, minima excepturi numquam modi exercitationem quia, hic itaque? Sequi nostrum, vero aliquam voluptatibus est vitae ex atque totam consequuntur reprehenderit aliquid velit rem reiciendis tempore cum eum exercitationem recusandae neque sunt saepe! Deserunt libero quo dolor! Aperiam repellendus doloribus ad animi quaerat officia accusamus corrupti iure voluptatibus error porro, maiores sunt reprehenderit numquam similique nihil rerum quidem tenetur quisquam enim labore deserunt tempora. Minus, dolorum. Animi nobis incidunt distinctio, ipsam, vero reiciendis recusandae itaque eius doloremque commodi odio ullam molestiae? A illum ea consequuntur reiciendis, nulla vitae exercitationem eum ipsa quos sunt porro, deleniti eveniet! Error voluptates sit possimus. Corporis ipsa ducimus corrupti ad. Quibusdam doloremque fugit laudantium pariatur perferendis minus recusandae modi rerum aut accusamus autem quia mollitia, nemo itaque excepturi enim asperiores dolores suscipit harum ab odio aspernatur magni rem voluptatibus. Neque vel accusantium consectetur cum molestiae sit, esse adipisci. Esse, consequuntur repudiandae! Iste rem odit facilis quod id fuga magni voluptatum? At obcaecati harum ut incidunt quibusdam eos explicabo officia totam magnam, deleniti esse corrupti! Saepe totam sapiente inventore mollitia magnam illo amet maiores corporis minima nobis ea enim, aliquid nam ipsam tempore consectetur placeat veritatis distinctio eligendi reprehenderit? Nesciunt quia dicta repellendus modi ullam quos consequatur? Excepturi fuga architecto placeat illum eum beatae nemo natus id rerum repellat. Iure culpa, temporibus quisquam, quidem sapiente labore aut quasi illo esse cupiditate at mollitia voluptatem aliquam quaerat harum minima libero architecto nam laboriosam sed provident facere! Consequuntur, qui repudiandae?"
-    }
+<script lang="ts">
+	import Footer from '$lib/components/Footer.svelte';
+	import Header from '$lib/components/Header.svelte';
+	import slugify from 'slugify';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+	const placeholderBlogPosts = [
+		{
+			uploadedAt: '19.07.2023',
+			category: 'Fußball',
+			image: 'https://picsum.photos/350/200?random=1',
+			title: 'Am Freitag findet das Spitzenspiel gegen Musterclub e.V. statt!',
+			previewText:
+				'Mit unserem Newsbaustein haben Sie die Möglichkeit, die Besucher Ihrer Internetseite regelmäßig über interessante Neuigkeiten aus Ihrem Verein zu informieren. Weiter test test terst',
+			link: '/blog/fußball/am-freitag-findet-das-spitzenspiel-gegen-musterclub-e-V-statt'
+		},
+		{
+			uploadedAt: '19.07.2023',
+			category: 'Fußball',
+			image: 'https://picsum.photos/350/200?random=2',
+			title: 'Am Freitag findet das Spitzenspiel gegen Musterclub e.V. statt!',
+			previewText:
+				'Mit unserem Newsbaustein haben Sie die Möglichkeit, die Besucher Ihrer Internetseite regelmäßig über interessante Neuigkeiten aus Ihrem Verein zu informieren.',
+			link: '/blog/fußball/am-freitag-findet-das-spitzenspiel-gegen-musterclub-e-V-statt'
+		},
+		{
+			uploadedAt: '19.07.2023',
+			category: 'Fußball',
+			image: 'https://picsum.photos/350/200?random=3',
+			title: 'Am Freitag findet das Spitzenspiel gegen Musterclub e.V. statt!',
+			previewText:
+				'Mit unserem Newsbaustein haben Sie die Möglichkeit, die Besucher Ihrer Internetseite regelmäßig über interessante Neuigkeiten aus Ihrem Verein zu informieren.',
+			link: '/blog/fußball/am-freitag-findet-das-spitzenspiel-gegen-musterclub-e-V-statt'
+		},
+		{
+			uploadedAt: '19.07.2023',
+			category: 'Fußball',
+			image: 'https://picsum.photos/350/200?random=4',
+			title: 'Am Freitag findet das Spitzenspiel gegen Musterclub e.V. statt!',
+			previewText:
+				'Mit unserem Newsbaustein haben Sie die Möglichkeit, die Besucher Ihrer Internetseite regelmäßig über interessante Neuigkeiten aus Ihrem Verein zu informieren.',
+			link: '/blog/fußball/am-freitag-findet-das-spitzenspiel-gegen-musterclub-e-V-statt'
+		},
+		{
+			uploadedAt: '19.07.2023',
+			category: 'Fußball',
+			image: 'https://picsum.photos/350/200?random=5',
+			title: 'Am Freitag findet das Spitzenspiel gegen Musterclub e.V. statt!',
+			previewText:
+				'Mit unserem Newsbaustein haben Sie die Möglichkeit, die Besucher Ihrer Internetseite regelmäßig über interessante Neuigkeiten aus Ihrem Verein zu informieren.',
+			link: '/blog/fußball/am-freitag-findet-das-spitzenspiel-gegen-musterclub-e-V-statt'
+		}
+	];
+
+	const maxDescriptionLength: number = 200;
 </script>
 
-<div class="w-screen h-full py-24 px-36 flex flex-col">
-    <header class="w-screen h-full py-24 px-36 flex flex-col">
-        <div class="w-[40%] h-1/4">
-            <img class="h-full rounded-xl" src={data.imageUrl} alt="">
-        </div>
-        <h1 >
-            {data.title}
-        </h1>
-    </header>
-    <main>s</main>
-    <footer>s</footer>
+<div class="w-screen h-full flex flex-col">
+	<Header />
+	<main class="px-72 flex flex-col min-w-full">
+		<div class="flex flex-col jusitfy-center items-center space-y-3">
+			<h1 class="text-3xl font-bold">Unser Blog</h1>
+			<h3 class="text-lg">Erfahren Sie mehr über unseren Verein.</h3>
+		</div>
+		<div class="flex flex-col my-12 space-y-6">
+			{#each data?.posts.items as post}
+				<a
+					href={`/blog/${slugify(post.title)}`}
+					class="flex items-center space-x-6 cursor-pointer hover:bg-slate-50 rounded-xl transition-all p-3"
+				>
+					<div class="max-w-[300px] h-full">
+						<!-- Image -->
+						<img class="rounded-xl" src={post.imageUrl} alt="" />
+					</div>
+					<div class="flex flex-col space-y-2">
+						<h1 class="text-2xl font-semibold">{post.title}</h1>
+						<p>
+							{#if post.description.split(' ').join('').length > maxDescriptionLength}
+								{post.description.substring(0, maxDescriptionLength)}...
+							{:else}
+								{post.description}
+							{/if}
+						</p>
+						<p>
+							Erstellt am
+							<span class="font-medium">
+								{new Date(post.created).toLocaleDateString('de-de', {
+									year: 'numeric',
+									month: 'long',
+									day: 'numeric'
+								})}
+							</span>
+						</p>
+					</div>
+				</a>
+			{/each}
+		</div>
+	</main>
 </div>
-
+<Footer />

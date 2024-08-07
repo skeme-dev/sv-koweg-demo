@@ -183,7 +183,6 @@
 	onMount(async () => {
 		sizes = await getImageSizes(previewImageURL);
 		correctAspect = sizes.w > sizes.h;
-		console.log(sizes);
 	});
 
 	$: if (imageFiles) {

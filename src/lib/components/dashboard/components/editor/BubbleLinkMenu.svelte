@@ -25,7 +25,9 @@
 			updateDelay
 		});
 
-		editor.registerPlugin(plugin);
+		if (!editor.isDestroyed) {
+			editor.registerPlugin(plugin);
+		}
 	});
 
 	onDestroy(() => {

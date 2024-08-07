@@ -2,8 +2,17 @@
 	import { page } from '$app/stores';
 	import SideNavigation from '$lib/components/dashboard/components/SideNavigation.svelte';
 	import TopNavigation from '$lib/components/dashboard/components/TopNavigation.svelte';
+	import { currentUser } from '$lib/stores/user';
+
+	import { setContext } from 'svelte';
+	import { writable } from 'svelte/store';
 
 	export let data;
+
+	const userStore = writable();
+	userStore.set(data.user);
+
+	setContext('user', $userStore);
 </script>
 
 <div class="backend-font w-screen h-screen flex bg-[#FCFCFD]">
@@ -13,11 +22,6 @@
 		<SideNavigation />
 		<main class="flex flex-1 flex-col">
 			<TopNavigation />
-
-			<form method="post" action="/dashboard/login?/logout">
-				<button type="submit">ausloggen</button>
-			</form>
-
 			<div class="border rounded-tl-3xl flex w-full flex-1 bg-white p-12">
 				<slot />
 			</div>
