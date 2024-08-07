@@ -1,4 +1,3 @@
-import { pb } from '$lib/db/pocketbase';
 import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 
@@ -10,7 +9,7 @@ export const load = (async ({ locals }) => {
 		locals.pb.authStore.baseModel.role == 'ADMIN'
 	) {
 		correspondingDepartment = await locals.pb.collection('departments').getList(1, 1, {
-			filter: pb.filter('leader = {:id}', { id: locals.pb.authStore.baseModel.id })
+			filter: locals.pb.filter('leader = {:id}', { id: locals.pb.authStore.baseModel.id })
 		});
 
 		throw redirect(303, '/dashboard/departments/' + correspondingDepartment.items[0].id);
