@@ -15,8 +15,8 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
-		"@sveltejs/adapter-node": "next",
-		"@sveltejs/kit": "next",
+		"@sveltejs/adapter-node": "^5.2.0",
+		"@sveltejs/kit": "^2.5.20",
 		"@types/bcrypt": "^5.0.2",
 		"@types/jsonwebtoken": "^9.0.5",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
