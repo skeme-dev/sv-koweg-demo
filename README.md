@@ -1,6 +1,6 @@
 # Demo for SV Koweg e.V. 
 
-This repo is for previewing. Changes will be build and deployed on a [Coolify](https://coolify.io) instance.
+This repo is for previewing purposes. Changes will be build and deployed on a [Coolify](https://coolify.io) instance.
 
 ### List of technology
 
