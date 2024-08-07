@@ -7,6 +7,14 @@ export const load = (async ({ params, locals }) => {
 	const team = await locals.pb.collection('teams').getOne(params.teamId, {
 		expand: 'trainers'
 	});
+
+	// set file object as url
+	const fileUrl = locals.pb.getFileUrl(team, team.team_image, {
+		thumb: '300x200'
+	});
+
+	team.team_image = fileUrl;
+
 	const trainings = await locals.pb.collection('trainings').getList(1, 3, {
 		filter: locals.pb.filter('team ?= {:id}', { id: params.teamId })
 	});

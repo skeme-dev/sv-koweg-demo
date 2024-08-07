@@ -4,7 +4,7 @@
 	import * as Table from '$lib/components/dashboard/ui/table';
 	import Badge from '$lib/components/dashboard/ui/badge/badge.svelte';
 	import { Plus } from 'lucide-svelte';
-	import { pb } from '$lib/db/pocketbase';
+	// import { pb } from '$lib/db/pocketbase';
 	import Dialog from '$lib/components/dashboard/components/Dialog.svelte';
 	import Label from '$lib/components/dashboard/ui/label/label.svelte';
 	import Input from '$lib/components/dashboard/ui/input/input.svelte';
@@ -66,13 +66,7 @@
 			<div class="flex flex-col space-y-3">
 				<h2 class="text-sm font-medium">Teambild</h2>
 				<div class="flex flex-col space-y-4">
-					<img
-						class="w-full rounded-lg"
-						src={pb.getFileUrl(data.team, data.team.team_image, {
-							thumb: '300x100'
-						})}
-						alt=""
-					/>
+					<img class="w-full rounded-lg" src={data.team.team_image} alt="" />
 				</div>
 			</div>
 			<div class="flex flex-col space-y-3 !mt-8">
